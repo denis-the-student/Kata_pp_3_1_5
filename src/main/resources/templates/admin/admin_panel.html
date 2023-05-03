@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin panel</title>
+</head>
+<body>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
+
+<h1>Admin panel</h1>
+<br>
+<form th:method="GET" th:action="@{/admin/create}">
+    <input type="submit" value="Создание нового хумана"/>
+</form>
+
+<br><br>
+<div>
+    <table th:border="1" th:cellpadding="10">
+        <caption>All users</caption>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        <tr th:each="user : ${users}">
+            <td th:utext="${user.getId()}">VALUE</td>
+            <td th:utext="${user.getUsername()}">VALUE</td>
+            <td th:utext="${user.getEmail()}">VALUE</td>
+            <td th:utext="${user.rolesToString()}">VALUE</td>
+            <td>
+                <form th:method="GET" th:action="@{/admin/edit/{id}(id=${user.getId()})}">
+                    <input type="submit" value="Edit"/>
+                </form>
+            </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+</html>

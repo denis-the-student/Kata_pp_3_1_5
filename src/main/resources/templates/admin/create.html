@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание нового хумана</title>
+</head>
+<body>
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Logout"/>
+</form>
+
+<h1>Создание нового хумана</h1>
+
+<br>
+<form th:method="POST" th:action="@{/admin/create}" th:object="${user}">
+    <label for="username">Username</label>
+    <input type="text" th:field="*{username}" id="username" required>
+    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"> name error</div>
+
+    <br>
+    <label for="email">Email</label>
+    <input type="email" th:field="*{email}" id="email" required>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> email error</div>
+
+    <br>
+    <label for="password">Password</label>
+    <input type="password" th:field="*{password}" id="password" required>
+    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"> password error</div>
+
+    <br>
+    <label for="roles">Role</label> <br>
+    <select th:field="*{roles}" id="roles" multiple required>
+        <option th:each="role : ${roles}"
+                th:value="${role.id}"
+                th:text="${role.toString()}">
+        </option>
+    </select>
+    <div style="color: red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"> roles error</div>
+
+    <br><br><br>
+    <input type="submit" value="Add new user"/>
+</form>
+
+</body>
+</html>
