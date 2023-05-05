@@ -26,10 +26,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException("Хуман с таким username не найден");
+            throw new UsernameNotFoundException("Хуман с таким email не найден");
         }
         return user;
     }
@@ -56,16 +56,16 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User save(User user) {
+    public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional
     @Override
-    public User update(User user) {
+    public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional

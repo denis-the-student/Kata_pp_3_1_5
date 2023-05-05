@@ -15,9 +15,9 @@ public interface UserService extends UserDetailsService {
 
     List<User> findAll();
 
-    User save(User user);
+    void save(User user);
 
-    User update(User user);
+    void update(User user);
 
     void delete(User user);
 }

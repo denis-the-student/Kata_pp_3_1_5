@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ public class AdminController {
     private final RoleService roleService;
     private final UserValidator userValidator;
 
+    @Autowired
     public AdminController(UserService userService, RoleService roleService, UserValidator userValidator) {
         this.userService = userService;
         this.roleService = roleService;
@@ -26,44 +29,35 @@ public class AdminController {
     }
 
     @GetMapping
-    public String admin(Model model) {
+    public String admin(Authentication authentication, Model model, @RequestParam(required = false) String error) {
+        User currentUser = (User) authentication.getPrincipal();
+        model.addAttribute("current_user", currentUser);
+        model.addAttribute("new_user", new User());
         model.addAttribute("users", userService.findAll());
-        return "/admin/admin_panel";
-    }
-
-    @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("user", new User());
         model.addAttribute("roles", roleService.findAll());
-        return "/admin/create";
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+        return "admin/admin_panel";
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public String save(@ModelAttribute("user") @Valid User user,
-                       BindingResult bindingResult, Model model) {
+                       BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("roles", roleService.findAll());
-            return "/admin/create";
+            return "redirect:/admin?error=error";
         }
         userService.save(user);
         return "redirect:/admin";
     }
 
-    @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("user", userService.findById(id));
-        model.addAttribute("roles", roleService.findAll());
-        return "/admin/edit";
-    }
-
     @PatchMapping("/edit")
     public String update(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult, Model model) {
+                         BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("roles", roleService.findAll());
-            return "/admin/edit";
+            return "redirect:/admin?error=error";
         }
         userService.update(user);
         return "redirect:/admin";

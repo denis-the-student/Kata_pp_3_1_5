@@ -57,7 +57,7 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return name.split("_")[1].toLowerCase();
+        return name.split("_")[1];
     }
 
     @Override
