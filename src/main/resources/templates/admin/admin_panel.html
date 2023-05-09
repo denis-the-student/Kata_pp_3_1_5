@@ -47,7 +47,7 @@
 
         <!-- Error announcer -->
         <span class="alert alert-danger alert-dismissible" role="alert" th:if="${error}=='error'"
-              style="color: red"> Error! </span>
+              style="color: red"> При сохранении пользователя в БД возникла ошибка </span>
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs border-0" id="myTab" role="tablist">
@@ -135,7 +135,8 @@
 
                                 <div class="form-group">
                                   <label class="col-form-label" for="password-edit">Password</label>
-                                  <input class="form-control" id="password-edit" type="password" name="password">
+                                  <input class="form-control" id="password-edit" type="password" name="password"
+                                         minlength="4">
                                 </div>
 
                                 <div class="form-group">
