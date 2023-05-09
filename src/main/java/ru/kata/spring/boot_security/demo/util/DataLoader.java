@@ -7,7 +7,7 @@ import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
-import java.util.Collections;
+import java.util.Set;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -31,14 +31,14 @@ public class DataLoader implements CommandLineRunner {
         admin.setUsername("admin");
         admin.setPassword("admin");
         admin.setEmail("admin@test.test");
-        admin.setRoles(Collections.singletonList(adminRole));
+        admin.setRoles(Set.of(adminRole));
         userService.save(admin);
 
         User user = new User();
         user.setUsername("user");
         user.setPassword("user");
         user.setEmail("user@test.test");
-        user.setRoles(Collections.singletonList(userRole));
+        user.setRoles(Set.of(userRole));
         userService.save(user);
     }
 }

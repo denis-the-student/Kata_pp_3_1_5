@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -40,7 +40,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @NotEmpty(message = "Обязательное поле")
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public User() {
     }
@@ -83,11 +83,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
@@ -129,4 +129,16 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return 2007;
+    }
 }

@@ -52,7 +52,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @PatchMapping("/edit")
+    @PatchMapping
     public String update(@ModelAttribute("user") @Valid User user,
                          BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
@@ -63,7 +63,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
         User user = userService.findById(id);
         userService.delete(user);

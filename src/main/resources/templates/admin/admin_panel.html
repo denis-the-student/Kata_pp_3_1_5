@@ -112,7 +112,7 @@
                             </div>
 
                             <!-- Edit Form -->
-                            <form th:method="PATCH" th:action="@{/admin/edit}" th:object="${user}">
+                            <form th:method="PATCH" th:action="@{/admin}" th:object="${user}">
                               <div class="modal-body text-center font-weight-bold">
 
                                 <div class="form-group">
@@ -179,7 +179,7 @@
                             </div>
 
                             <!-- Delete Form -->
-                            <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
+                            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
                               <div class="modal-body text-center font-weight-bold">
 
                                 <div class="form-group">
