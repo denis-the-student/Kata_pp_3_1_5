@@ -7,15 +7,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 </head>
 <body class="bg-light h-100">
 
 <nav class="navbar bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#" style=" font-weight: bold; color: white;"
-           th:text="${current_user.email} + ' with roles: ' + ${current_user.roles}">"current_user_email" with roles:
-            "current_user_roles"</a>
+    <span class="navbar-brand">
+      <b><span class="align-middle" id="currentUserEmail"></span></b>
+        <!-- Data From JS Fetch -->
+      <span class="align-middle">with roles:</span>
+      <span class="align-middle" id="currentUserRoles"></span>
+    </span>
         <form class="" th:action="@{/logout}" th:method="POST">
             <button type="submit" class="btn btn-dark text-light">Logout</button>
         </form>
@@ -48,13 +51,8 @@
                                 <th>Role</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td th:utext="${current_user.id}">VALUE</td>
-                                <td th:utext="${current_user.username}">VALUE</td>
-                                <td th:utext="${current_user.email}">VALUE</td>
-                                <td th:utext="${current_user.rolesToString()}">VALUE</td>
-                            </tr>
+                            <tbody id="current-user-table-body">
+                                <!-- Data From JS Fetch -->
                             </tbody>
                         </table>
                     </div>
@@ -63,5 +61,6 @@
         </div>
     </div>
 </div>
+<script src="/js/current-user-info.js"></script>
 </body>
 </html>

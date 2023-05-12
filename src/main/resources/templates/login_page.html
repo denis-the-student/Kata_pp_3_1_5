@@ -4,8 +4,9 @@
 <head>
   <title>Login page</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 </head>
 
 <body>
@@ -18,10 +19,13 @@
           <div th:if="${param.error}" style="color: red">
             Bad credentials
           </div>
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-          <input type="email" class="form-control" name="email" id="email" placeholder="Email address" required/>
+<!--          TODO CSRF -->
+<!--          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+          <label for="email" hidden></label>
+          <input type="email" class="form-control" name="email" id="email" placeholder="Email address" required>
+          <label for="password" hidden></label>
           <input type="password" class="form-control" name="password" id="password"
-                 placeholder="Password" required/>
+                 placeholder="Password" required>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Sign in</button>
       </form>

@@ -24,15 +24,15 @@ public class User implements UserDetails {
     @Size(min = 2, message = "Минимум 2 символа")
     private String username;
 
-    @Column(nullable = false)
-    @NotEmpty(message = "Обязательное поле")
-    @Size(min = 4, message = "Минимум 4 символа")
-    private String password;
-
     @Column(nullable = false, unique = true)
     @NotEmpty(message = "Обязательное поле")
     @Email(message = "Невалидный адрес")
     private String email;
+
+    @Column(nullable = false)
+    @NotEmpty(message = "Обязательное поле")
+    @Size(min = 4, message = "Минимум 4 символа")
+    private String password;
 
     @ManyToMany
     @JoinTable(

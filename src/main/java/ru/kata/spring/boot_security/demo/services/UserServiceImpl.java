@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,26 +28,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("Хуман с таким email не найден");
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("Хуман с email=%s не найден", email));
         }
-        return user;
+        return userOptional.get();
     }
 
     @Override
-    public User findByUsername(String username) {
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public User findById(long id) {
-        return userRepository.findById(id);
     }
 
     @Override
@@ -63,15 +64,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void update(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
-    @Transactional
-    @Override
-    public void delete(User user) {
-        userRepository.delete(user);
+    public void delete(Long id) {
+        userRepository.deleteById(id);
     }
 
 }

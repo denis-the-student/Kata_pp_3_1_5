@@ -22,9 +22,13 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Role adminRole = new Role("ROLE_ADMIN");
-        Role userRole = new Role("ROLE_USER");
+
+        Role adminRole = new Role();
+        adminRole.setName("ROLE_ADMIN");
         roleService.save(adminRole);
+
+        Role userRole = new Role();
+        userRole.setName("ROLE_USER");
         roleService.save(userRole);
 
         User admin = new User();
@@ -40,5 +44,14 @@ public class DataLoader implements CommandLineRunner {
         user.setEmail("user@test.test");
         user.setRoles(Set.of(userRole));
         userService.save(user);
+
+        for (int i = 1; i < 5; i++) {
+            User testUser = new User();
+            testUser.setUsername("test_user" + i);
+            testUser.setPassword("1234");
+            testUser.setEmail("user" + i + "@test.test");
+            testUser.setRoles(Set.of(userRole));
+            userService.save(testUser);
+        }
     }
 }
